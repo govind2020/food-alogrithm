@@ -55,24 +55,28 @@ export async function POST(request: Request): Promise<any> {
     activity: result.activity,
   };
 
-  // save data to DB
-  const prisma = new PrismaClient();
+  // save data to Json server
   const slug = result.name
     ? result.name + uuidv4().substring(0, 4)
     : uuidv4().substring(0, 5);
-  await prisma.program
-    .create({
-      data: {
-        slug,
-        diet: {},
-        overview,
-        workout: {},
+    const jsonServerUrl = 'http://localhost:4000/result';
+    const jsonData = { slug, overview };
+    fetch(jsonServerUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
+      body: JSON.stringify(jsonData),
     })
-    .then(() => console.log('DATA ADDED TO DB'))
-    .catch((err) => console.log(err));
-
+      .then(response => response.json())
+      .then(data => console.log('Data uploaded to JSON server:', data))
+      .catch(error => console.error('Error uploading data to JSON server:', error));
+    
+      
   return NextResponse.json({
     slug,
   });
+
+
+
 }

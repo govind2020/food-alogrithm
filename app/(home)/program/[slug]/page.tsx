@@ -1,4 +1,5 @@
 // imports
+"use client"
 import { Separator } from '@/components/ui/separator';
 import { AiFillYoutube } from 'react-icons/ai';
 import { FaInfoCircle } from 'react-icons/fa';
@@ -39,23 +40,35 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import CopyLink from '@/components/copy';
+import { useEffect, useState } from 'react';
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
-export default async function ProgramPage({
+export default  function ProgramPage({
   params,
 }: {
   params: { slug: string };
 }) {
-  // fetch data
-  let data: any = {};
-  await prisma.program
-    .findUnique({
-      where: { slug: params.slug },
-    })
-    .then((result) => {
-      data = result;
-    });
+
+  const [data, setData] = useState<any>(null);
+  useEffect(() => {
+    const url = `http://localhost:4000/result`;
+
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        return response.json();
+      })
+      .then(result => {
+        const filteredData = result.find((item: any) => item.slug == params.slug);
+        setData(filteredData);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, [params]);
 
   // returns
   if (!data) return <h1>NO DATA</h1>;
@@ -63,36 +76,37 @@ export default async function ProgramPage({
   // bmi
   const {
     bmi, healthy, overweight, status, underweight, ideal_weight,
-  } = getBMI({
-    height: data.overview.height,
-    weight: data.overview.weight,
-    gender: data.overview.gender,
-    fitness_goal: data.overview.fitness_goal,
+  } = getBMI(
+    {
+    height: data.overview?.height,
+    weight: data?.overview?.weight,
+    gender: data?.overview?.gender,
+    fitness_goal: data?.overview?.fitness_goal,
   });
 
   // composition
   const composition = getCompositionData({
-    age: data.overview.age,
-    body_type: data.overview.body_type,
-    gender: data.overview.gender,
-    height: data.overview.height,
-    hip: data.overview.hip,
-    is_fat_accurate: data.overview.is_fat_accurate,
-    neck: data.overview.neck,
-    waist: data.overview.waist,
-    fitness_goal: data.overview.fitness_goal,
+    age: data?.overview?.age,
+    body_type: data?.overview?.body_type,
+    gender: data?.overview?.gender,
+    height: data?.overview?.height,
+    hip: data?.overview?.hip,
+    is_fat_accurate: data?.overview?.is_fat_accurate,
+    neck: data?.overview?.neck,
+    waist: data?.overview?.waist,
+    fitness_goal: data?.overview?.fitness_goal,
   });
 
   // calories
   const calory_data = calculateCalories({
-    activity: data.overview.activity,
-    age: data.overview.age,
-    current_weight: data.overview.weight,
-    fitness_goal: data.overview.fitness_goal,
-    gender: data.overview.gender,
-    height: data.overview.height,
+    activity: data?.overview?.activity,
+    age: data?.overview?.age,
+    current_weight: data?.overview?.weight,
+    fitness_goal: data?.overview?.fitness_goal,
+    gender: data?.overview?.gender,
+    height: data?.overview?.height,
     ideal_weight,
-    workout_days: data.overview.workout_days,
+    workout_days: data?.overview?.workout_days,
   })
 
   return (
@@ -117,7 +131,7 @@ export default async function ProgramPage({
             <h3 className="text-xl font-semibold">Weight Assessment</h3>
             <div>
               Your current weight (
-              {data.overview?.weight}
+              {data?.overview?.weight}
               {' '}
               Kg) is considered
               {status === 'healthy' && (
@@ -225,10 +239,10 @@ export default async function ProgramPage({
                         <div>
                           bmi =
                           {' '}
-                          {data.overview.weight}
+                          {data.overview?.weight}
                           {' '}
                           / (
-                          {data.overview.height / 100}
+                          {data.overview?.height / 100}
                           {' '}
                           ^ 2)
                         </div>
@@ -320,14 +334,14 @@ export default async function ProgramPage({
               Kg
             </div>
 
-            {ideal_weight === data.overview.weight && data.overview.fitness_goal !== 'build_muscle' && (
+            {ideal_weight === data.overview?.weight && data.overview?.fitness_goal !== 'build_muscle' && (
               <p>
                 Based D. R. Miller Formula, your current weight is considered perfect,
                 make sure to maitain this weight.
               </p>
             )}
 
-            {ideal_weight !== data.overview.weight && data.overview.fitness_goal !== 'build_muscle' && (
+            {ideal_weight !== data.overview?.weight && data.overview?.fitness_goal !== 'build_muscle' && (
               <p>
                 Based D. R. Miller Formula and your fitness goal, the ideal
                 weight that you can achieve is
@@ -338,7 +352,7 @@ export default async function ProgramPage({
               </p>
             )}
 
-            {data.overview.fitness_goal === 'build_muscle' && (
+            {data.overview?.fitness_goal === 'build_muscle' && (
               <p>
                 Since your fitness goal is to build muscles, you need to aim for
                 {' '}
@@ -383,22 +397,22 @@ export default async function ProgramPage({
           </div>
         </div>
 
-        <Factors fitness_goal={data.overview.fitness_goal} />
+        <Factors fitness_goal={data.overview?.fitness_goal} />
 
         {/* summary */}
         <div className="flex flex-col gap-3">
           <h3 className="text-xl font-semibold">Summary</h3>
           <p>
             As a summary, your goal is to
-            {data.overview.weight > ideal_weight
+            {data.overview?.weight > ideal_weight
               && ` lose ${
-                data.overview.weight - ideal_weight
+                data.overview?.weight - ideal_weight
               } Kg to reach the ideal weight suggested (${ideal_weight} kg), `}
-            {data.overview.weight < ideal_weight
+            {data.overview?.weight < ideal_weight
               && ` gain ${
-                ideal_weight - data.overview.weight
+                ideal_weight - data.overview?.weight
               } Kg to reach the ideal weight suggested (${ideal_weight} kg), `}
-            {data.overview.weight === ideal_weight
+            {data.overview?.weight === ideal_weight
               && ' maintain your current weight, '}
             and for the body composition you should
             {composition.fat_percentage > composition.ideal_fat
@@ -414,14 +428,14 @@ export default async function ProgramPage({
       </div>
 
       {/* workout */}
-      {data.overview.fitness_goal === 'build_muscle' && (
-        <MuscleWorkout workout_days={data.overview.workout_days} />
+      {data.overview?.fitness_goal === 'build_muscle' && (
+        <MuscleWorkout workout_days={data.overview?.workout_days} />
       )}
-      {data.overview.fitness_goal === 'cardiovascular' && (
-        <CardiovascularWorkout workout_days={data.overview.workout_days} />
+      {data.overview?.fitness_goal === 'cardiovascular' && (
+        <CardiovascularWorkout workout_days={data.overview?.workout_days} />
       )}
-      {data.overview.fitness_goal === 'burn_fats' && (
-        <FatWorkout workout_days={data.overview.workout_days} />
+      {data.overview?.fitness_goal === 'burn_fats' && (
+        <FatWorkout workout_days={data.overview?.workout_days} />
       )}
 
       {/* Diet */}
@@ -438,16 +452,16 @@ export default async function ProgramPage({
         <div className="flex flex-col gap-5 w-full h-full">
           <h3 className="text-xl font-semibold">Daily Caloric Requirement</h3>
           <div className="text-3xl font-semibold text-emerald-500">
-            {ideal_weight < data.overview.weight && calory_data.lose_05}
-            {ideal_weight > data.overview.weight && calory_data.gain_05}
-            {ideal_weight === data.overview.weight && calory_data.calories}
+            {ideal_weight < data.overview?.weight && calory_data.lose_05}
+            {ideal_weight > data.overview?.weight && calory_data.gain_05}
+            {ideal_weight === data.overview?.weight && calory_data.calories}
             {' '}
             Calories
           </div>
           <p>
-            {ideal_weight < data.overview.weight && `In order to lose 0.5 Kg per week you need to comsume ${calory_data.lose_05} calories a day.`}
-            {ideal_weight > data.overview.weight && `In order to gain 0.5 Kg per week you need to comsume ${calory_data.gain_05} calories a day.`}
-            {ideal_weight === data.overview.weight && `In order to maitain your current weight, you need to comsume ${calory_data.calories} calories a day.`}
+            {ideal_weight < data.overview?.weight && `In order to lose 0.5 Kg per week you need to comsume ${calory_data.lose_05} calories a day.`}
+            {ideal_weight > data.overview?.weight && `In order to gain 0.5 Kg per week you need to comsume ${calory_data.gain_05} calories a day.`}
+            {ideal_weight === data.overview?.weight && `In order to maitain your current weight, you need to comsume ${calory_data.calories} calories a day.`}
           </p>
 
           {/* chart v2 */}
@@ -571,37 +585,37 @@ export default async function ProgramPage({
             <TableBody>
               <TableRow>
                 <TableCell className="font-medium">-1 Kg/week</TableCell>
-                <TableCell>{calory_data.lose_1}</TableCell>
+                <TableCell>{calory_data?.lose_1}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell className="font-medium">-0.5 Kg/week</TableCell>
-                <TableCell>{calory_data.lose_05}</TableCell>
+                <TableCell>{calory_data?.lose_05}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell className="font-medium">-0.25 Kg/week</TableCell>
-                <TableCell>{calory_data.lose_025}</TableCell>
+                <TableCell>{calory_data?.lose_025}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell className="font-medium">Maitain weight</TableCell>
-                <TableCell>{calory_data.calories}</TableCell>
+                <TableCell>{calory_data?.calories}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell className="font-medium">+0.25 Kg/week</TableCell>
-                <TableCell>{calory_data.gain_025}</TableCell>
+                <TableCell>{calory_data?.gain_025}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell className="font-medium">+0.5 Kg/week</TableCell>
-                <TableCell>{calory_data.gain_05}</TableCell>
+                <TableCell>{calory_data?.gain_05}</TableCell>
               </TableRow>
 
               <TableRow>
                 <TableCell className="font-medium">+1 Kg/week</TableCell>
-                <TableCell>{calory_data.gain_1}</TableCell>
+                <TableCell>{calory_data?.gain_1}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -615,14 +629,14 @@ export default async function ProgramPage({
               Daily Proteins Requirement
             </h3>
             <div className="text-3xl font-semibold text-emerald-500">
-              {calory_data.protein_1}
+              {calory_data?.protein_1}
               g to
               {' '}
-              {calory_data.protein_2}
+              {calory_data?.protein_2}
               g
             </div>
             <p>
-              {data.overview.fitness_goal === 'build_muscle' && 'Since your goal is to build muscles, high protein intake is an important factor to build lean muscle mass'}
+              {data?.overview?.fitness_goal === 'build_muscle' && 'Since your goal is to build muscles, high protein intake is an important factor to build lean muscle mass'}
             </p>
             <div className="flex flex-col gap-1">
               <div className="font-semibold">Sources:</div>
@@ -650,14 +664,14 @@ export default async function ProgramPage({
               Daily Carbs Requirement
             </h3>
             <div className="text-3xl font-semibold text-emerald-500">
-              {calory_data.carbs_1}
+              {calory_data?.carbs_1}
               g to
               {' '}
-              {calory_data.carbs_2}
+              {calory_data?.carbs_2}
               g
             </div>
             <p>
-              {data.overview.fitness_goal === 'build_muscle' && 'Carbohydrates are a crucial macronutrient for bodybuilders due to their role in providing energy for intense workouts and aiding in muscle recovery'}
+              {data?.overview?.fitness_goal === 'build_muscle' && 'Carbohydrates are a crucial macronutrient for bodybuilders due to their role in providing energy for intense workouts and aiding in muscle recovery'}
             </p>
             <div className="flex flex-col gap-1">
               <div className="font-semibold">Sources:</div>
@@ -685,14 +699,14 @@ export default async function ProgramPage({
               Daily Fats Requirement
             </h3>
             <div className="text-3xl font-semibold text-emerald-500">
-              {calory_data.fats_1}
+              {calory_data?.fats_1}
               g to
               {' '}
-              {calory_data.fats_2}
+              {calory_data?.fats_2}
               g
             </div>
             <p>
-              {data.overview.fitness_goal === 'build_muscle' && 'You need to take from 20% to 25% fats of total calories'}
+              {data?.overview?.fitness_goal === 'build_muscle' && 'You need to take from 20% to 25% fats of total calories'}
             </p>
             <div className="flex flex-col gap-1">
               <div className="font-semibold">Sources:</div>

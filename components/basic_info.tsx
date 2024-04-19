@@ -64,8 +64,8 @@ export default function BasicInfoCard({
             How old are you 🎂 ?
           </Label>
           <Picker
-            max={99}
-            min={18}
+            max={70}
+            min={12}
             tag="years old"
             value={answers.age}
             onAdd={() => setAnswers({ ...answers, age: answers.age + 1 })}

@@ -10,6 +10,7 @@ export default function CardiovascularWorkout({
 }: {
   workout_days: number;
 }) {
+  console.log("CardiovascularWorkout==>",workout_days)
   const programs = {
     days_2: [
       {

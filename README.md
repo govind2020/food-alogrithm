@@ -3,8 +3,6 @@
 **✅Next.js 13 app router**
 **✅TailwindCss**
 **✅Shadcn/ui**
-**✅Prisma**
-**✅Lottie**
 **✅MongoDB**
 
 👉 [Live Demo](https://bestshape.fit) 👈

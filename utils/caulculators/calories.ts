@@ -34,26 +34,42 @@ export default function calculateCalories(
     carbs_1: number
     carbs_2: number
   } {
+
+    console.log("Calories==>",
+    current_weight,
+    ideal_weight,
+    height,
+    age,
+    gender,
+    activity,
+    workout_days,
+    fitness_goal,)
+
   // caculate BMR
+  console.log("caculate BMR")
   let bmr = 0
   if (gender === 'M') bmr = 10 * current_weight + 6.25 * height - 5 * age + 5
   else bmr = 10 * current_weight + 6.25 * height - 5 * age - 161
 
   // add workout_days to BMR
+  console.log("add workout_days to BMR")
   if (workout_days <= 2) bmr += 1.375
   if (workout_days <= 5) bmr += 1.55
   if (workout_days <= 7) bmr += 1.725
 
   // add activity to BMR
+  console.log("add activity to BMR")
   if (activity === '0') bmr += 1.2
   if (activity === '1') bmr += 1.375
   if (activity === '2') bmr += 1.55
   if (activity === '3') bmr += 1.725
 
   // convertion
-  bmr = Math.floor(bmr)
+  console.log("convertion")
+  bmr = Math.floor(bmr) // basal metabolic rate
 
   // protein
+  console.log('protein')
   let protein_1 = 0
   let protein_2 = 0
   if (fitness_goal === 'build_muscle') {
@@ -65,6 +81,7 @@ export default function calculateCalories(
   }
 
   // fats
+  console.log("fats")
   let fats_1 = 0
   let fats_2 = 0
   if (fitness_goal === 'build_muscle') {
@@ -76,6 +93,7 @@ export default function calculateCalories(
   }
 
   // carbs
+  console.log("carbs")
   let carbs_1 = 0
   let carbs_2 = 0
   if (current_weight - ideal_weight > 4) {

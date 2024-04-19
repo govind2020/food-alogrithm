@@ -14,9 +14,10 @@ export default function Navbar({ className }: { className: string }) {
   return (
     <div className={`flex py-6 justify-between items-center ${className} w-full`}>
       {/* LOGO */}
-      <div className="w-36 md:w-40 xl:w-60">
+      <div className="w-36 md:w-40 xl:w-60 text-blue-600 bold ">
         <Link href="/">
-          <Image alt="logo" width={200} height={200} src="/images/logo.svg" />
+          {/* <Image alt="logo" width={200} height={200} src="https://d2u4q3iydaupsp.cloudfront.net/AKMZJMf46gOPtaebKk2eqmG1TmgXONBCT1pYNL3abIcXFOxtZfeuNuS0UhKxehLnoFEI2fKxs3VShY6ZG0FvF328dWo6fgIwLSMlnXEo2BIFcmHrKhFZrmGmZUkVuPz3" /> */}
+          METAFIT
         </Link>
       </div>
 

@@ -14,6 +14,7 @@ export function calculateFat({
   height,
   gender,
 }: dataType): number {
+  console.log("calculateFat", calculateFat);
   if (gender === 'M') {
     return Math.floor(
       495
@@ -39,6 +40,7 @@ export function getIdeal({
   age: number;
   gender: 'M' | 'F';
 }): number {
+  console.log("getIdeal")
   if (age <= 20 && gender === 'M') return 9;
   if (age <= 20 && gender === 'F') return 18;
   if (age <= 25 && gender === 'M') return 11;
@@ -69,6 +71,9 @@ export function isCompositionHealthy({
   gender: 'M' | 'F';
   age: number;
 }): boolean {
+
+  console.log("isCompositionHealthy", gender , fat_percentage );
+
   // age less than 40 - F
   if (age < 40 && gender === 'F' && fat_percentage < 33) return true;
 
@@ -128,6 +133,9 @@ export default function getCompositionData({
     max_value: number;
     ideal_fat: number;
   } {
+    console.log("getCompositionData");
+    console.log("is_fat_accurate", is_fat_accurate);
+
   let fat_percentage = 0;
   if (is_fat_accurate) {
     fat_percentage = calculateFat({
