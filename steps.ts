@@ -10,6 +10,8 @@ const steps_list: stepType[] = [
     component: null,
     answers: {
       name: '',
+      email: '',
+      phone: '',
       age: 22,
       gender: 'M',
       height: 175,

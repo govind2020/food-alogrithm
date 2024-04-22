@@ -16,7 +16,6 @@ type responseType = {
 };
 
 export function bmiToKg(bmi: number, height_meters: number): number {
-  console.log('bmiToKg', bmiToKg);
   return bmi * (height_meters * height_meters);
 }
 
@@ -29,8 +28,6 @@ export function getIdealWeight({
   height: number;
   gender: 'M' | 'F';
 }): number {
-
-  console.log('getIdealWeight 1')
 
   if (fitness_goal === 'build_muscle') {
     if (height <= 167) return 73;
@@ -57,14 +54,9 @@ export default function getBMI({
   gender,
   fitness_goal,
 }: bmiType): responseType {
-  console.log("bmi data==>",  
-  height,
-  weight,
-  gender,
-  fitness_goal,);
 
   // calculate BMI
-  console.log("getBMI 2")
+
   const height_meters = height / 100;
   const bmi = Math.floor(weight / (height_meters * height_meters));
   let status: 'healthy' | 'underweight' | 'overweight' | 'obese' = 'healthy';

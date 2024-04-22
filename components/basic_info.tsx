@@ -47,13 +47,43 @@ export default function BasicInfoCard({
           <Label htmlFor="name" className="text-md lg:text-lg">
             Name
             {' '}
-            <span className="text-neutral-500 text-xs lg:text-md">(optional)</span>
+            <span className="text-neutral-500 text-xs lg:text-md"></span>
           </Label>
           <Input
             defaultValue={answers.name}
             onChange={(e) => setAnswers({ ...answers, name: e.target.value })}
             id="name"
             placeholder="What's your name"
+            className="py-6 lg:py-7 text-md lg:text-xl"
+          />
+        </div>
+
+        <div className="flex flex-col space-y-3">
+          <Label htmlFor="email" className="text-md lg:text-lg">
+            Email
+            {' '}
+            <span className="text-neutral-500 text-xs lg:text-md"></span>
+          </Label>
+          <Input
+            defaultValue={answers.email}
+            onChange={(e) => setAnswers({ ...answers, email: e.target.value })}
+            id="email"
+            placeholder="test@gmail.com"
+            className="py-6 lg:py-7 text-md lg:text-xl"
+          />
+        </div>
+
+        <div className="flex flex-col space-y-3">
+          <Label htmlFor="phone" className="text-md lg:text-lg">
+            Phone Number
+            {' '}
+            <span className="text-neutral-500 text-xs lg:text-md"></span>
+          </Label>
+          <Input
+            defaultValue={answers.phone}
+            onChange={(e) => setAnswers({ ...answers, phone: e.target.value })}
+            id="phone"
+            placeholder="What is your phone number"
             className="py-6 lg:py-7 text-md lg:text-xl"
           />
         </div>

@@ -40,8 +40,10 @@ export async function POST(request: Request): Promise<any> {
 
   // overview data
   const overview = {
-    name: result.name || null,
+    name: result.name,
     age: result.age,
+    email: result.email,
+    phone: result.phone,
     gender: result.gender,
     weight: result.weight,
     height: result.height,
