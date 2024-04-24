@@ -35,6 +35,20 @@ const steps_list: stepType[] = [
       activity: '0',
     },
   },
+  // {
+  //   id: 'NutritionGoal',
+  //   icon: '🎯',
+  //   title: 'Nutrition Goal 🎯',
+  //   description: 'A balanced diet refers to food that contains different nutrients and is in proper proportions.',
+  //   component: null,
+  //   answers: {
+  //     crrent_diet: 'vegetarian',
+  //     // food_alegric: '',
+  //     number_snacks: '2',
+  //     eating_out: '2',
+  //     water_drinking: '2',
+  //   },
+  // },
 ];
 
 export default steps_list;

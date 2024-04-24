@@ -26,13 +26,18 @@ export default function FitGoal({
   description: string;
   id: string;
 }) {
+
   // variables
-  const { getAnswer, updateAnswer } = useContext(StepsContext);
+  const {
+    getAnswer, updateAnswer, blockNext, allowNext,
+  } = useContext(StepsContext);
+
   const [answers, setAnswers] = useState<any>(getAnswer(id));
 
-  // functions
-  useEffect(() => {
+   // functions
+   useEffect(() => {
     updateAnswer(id, answers);
+    allowNext()
   }, [answers]);
 
   // returns

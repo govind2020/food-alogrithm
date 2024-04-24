@@ -55,6 +55,11 @@ export async function POST(request: Request): Promise<any> {
     fitness_goal: result.fitness_goal,
     workout_days: result.workout_days,
     activity: result.activity,
+    crrent_diet:result.crrent_diet,
+    food_alegric:result.food_alegric,
+    number_snacks:result.number_snacks,
+    eating_out:result.eating_out,
+    water_drinking:result.water_drinking,
   };
 
   // save data to Json server

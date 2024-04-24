@@ -6,6 +6,7 @@ import { StepsContext } from '@/context/steps';
 import StepBar from '@/components/step_bar';
 import BasicInfoCard from '@/components/basic_info';
 import FitGoal from '@/components/fit_goal';
+import NutritionGoal from '@/components/nutertion_goal';
 import MedicalCard from '@/components/medical';
 import SleepCard from '@/components/sleep';
 import Lifestyle from '@/components/lifestyle';
@@ -30,6 +31,7 @@ export default function Home() {
   useEffect(() => {
     loadComponent('BasicInfoCard', BasicInfoCard);
     loadComponent('FitGoal', FitGoal);
+    loadComponent('NutritionGoal', NutritionGoal);
     loadComponent('MedicalCard', MedicalCard);
     loadComponent('SleepCard', SleepCard);
     loadComponent('Lifestyle', Lifestyle);

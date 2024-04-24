@@ -623,7 +623,7 @@ export default  function ProgramPage({
         </div>
 
         <div className="flex flex-col lg:flex-row gap-10 items-start">
-          {/* Protein */}
+         
           <div className="flex flex-col gap-5 w-full h-full">
             <h3 className="text-xl font-semibold">
               Daily Proteins Requirement
@@ -658,7 +658,7 @@ export default  function ProgramPage({
             </div>
           </div>
 
-          {/* Carbs */}
+         
           <div className="flex flex-col gap-5 w-full h-full">
             <h3 className="text-xl font-semibold">
               Daily Carbs Requirement
@@ -693,7 +693,6 @@ export default  function ProgramPage({
             </div>
           </div>
 
-          {/* Fats */}
           <div className="flex flex-col gap-5 w-full h-full">
             <h3 className="text-xl font-semibold">
               Daily Fats Requirement
