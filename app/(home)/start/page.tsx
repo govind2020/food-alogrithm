@@ -13,12 +13,6 @@ import Lifestyle from '@/components/lifestyle';
 import AvailabilityCard from '@/components/availability';
 import DietCard from '@/components/diet';
 import Loader from '@/components/loader';
-import Loading from '@/components/loading';
-import Lottie from 'lottie-react';
-import doneAnimation from '@/animations/done.json';
-import waveAnimation from '@/animations/wave.json';
-import Program from '@/components/program';
-import { useRouter } from 'next/navigation';
 
 export default function Home() {
   // variables

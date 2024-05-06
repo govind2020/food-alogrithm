@@ -1,5 +1,10 @@
-"use client";
-import { useSearchParams } from "next/navigation";
+/* eslint-disable max-len */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable @typescript-eslint/quotes */
+
+'use client';
+
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from "react";
 
 const dietInfo = [
@@ -15,8 +20,8 @@ const dietInfo = [
       "Fruits and Vegetables: A wide variety of fresh produce, providing essential vitamins, minerals, and antioxidants.",
       "Whole Grains: Such as brown rice, oats, and barley, offering fiber and nutrients.",
       "Plant-Based Oils: Like olive oil and coconut oil, used for cooking and dressings.",
-      "Plant-Based Milk: Including almond milk, soy milk, and oat milk, as alternatives to dairy milk."
-    ]
+      "Plant-Based Milk: Including almond milk, soy milk, and oat milk, as alternatives to dairy milk.",
+    ],
   },
   {
     id: "vegan",
@@ -30,8 +35,8 @@ const dietInfo = [
       "Tempeh: A fermented soy product, rich in protein and probiotics.",
       "Plant-Based Protein Powders: Derived from sources like pea, hemp, or rice, for smoothies and shakes.",
       "Whole Grains: Including quinoa, brown rice, and whole wheat, for fiber and nutrients.",
-      "Fruits and Vegetables: A diverse range of fresh produce for essential nutrients and antioxidants."
-    ]
+      "Fruits and Vegetables: A diverse range of fresh produce for essential nutrients and antioxidants.",
+    ],
   },
   {
     id: "omnivore",
@@ -45,12 +50,12 @@ const dietInfo = [
       "Nuts and Seeds: Providing healthy fats, protein, and essential nutrients.",
       "Legumes: Such as lentils, black beans, and chickpeas, for plant-based protein and fiber.",
       "Healthy Oils: Like olive oil and avocado oil, for cooking and dressings.",
-      "Herbs and Spices: Used to enhance flavor and add variety to dishes."
-    ]
-  }
+      "Herbs and Spices: Used to enhance flavor and add variety to dishes.",
+    ],
+  },
 ];
 
-const page = () => {
+function Page() {
   const searchParams = useSearchParams();
   const [data, setData] = useState<any>(null);
   const [dietDetails, setDietDetails] = useState("");
@@ -67,7 +72,7 @@ const page = () => {
         return response.json();
       })
       .then((result) => {
-        const filteredData = result.find((item: any) => item.id == search);
+        const filteredData = result.find((item: any) => item.id === search);
         setData(filteredData);
         setDietDetails(filteredData.current_diet);
       })
@@ -84,16 +89,14 @@ const page = () => {
         <div className="flex flex-col gap-20">
           {/* overview  */}
           <div className="flex flex-col gap-3">
-            <h2 className="font-bold text-3xl lg:text-4xl flex-shrink-0">
-              Hi {data?.name} , Your General Overview
-            </h2>
+            <h2 className="font-bold text-3xl lg:text-4xl flex-shrink-0">Hi {data?.name} , Your General Overview</h2>
             <span className="text-neutral-400 text-sm font-normal">
               A general overview on the Nutertion plan and current health Diet
               Food
             </span>
           </div>
-           {/* number of snacks  */}
-           <div className="flex flex-col gap-3">
+          {/* number of snacks  */}
+          <div className="flex flex-col gap-3">
             <h3 className="font-bold text-3xl lg:text-4xl flex-shrink-0">
               Eating Weekly outside Food
             </h3>
@@ -137,22 +140,23 @@ const page = () => {
                   This Meal should be in your Diet Every Week
                 </h3>
                 <p className="text-neutral-400 text-sm font-normal mb-2">
-                Since your goal is to build muscles and stay Fit , high protein intake is an important factor to build lean muscle mass
+                  Since your goal is to build muscles and stay Fit , high protein intake is an important factor to build lean muscle mass
                 </p>
                 <ul className="text-black text-sm font-normal">
-                  {diet &&
-                    diet.food.map((item, index) => <li className="mb-2" key={index}>{item}</li>)}
+                  {diet
+                    // eslint-disable-next-line react/no-array-index-key
+                    && diet.food.map((item, index) => <li className="mb-2" key={index}>{item}</li>)}
                 </ul>
               </div>
             ) : (
               <p>Loading data...</p>
             )}
           </div>
-         
+
         </div>
       </div>
     </div>
   );
-};
+}
 
-export default page;
+export default Page;

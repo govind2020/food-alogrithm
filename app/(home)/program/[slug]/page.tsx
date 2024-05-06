@@ -1,72 +1,61 @@
+/* eslint-disable no-unsafe-optional-chaining */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable operator-linebreak */
+/* eslint-disable object-curly-newline */
+/* eslint-disable arrow-parens */
+/* eslint-disable @typescript-eslint/quotes */
+
+"use client";
+
 // imports
-"use client"
-import { Separator } from '@/components/ui/separator';
-import { AiFillYoutube } from 'react-icons/ai';
-import { FaInfoCircle } from 'react-icons/fa';
-import { FcGoogle } from 'react-icons/fc';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
+import { Separator } from "@/components/ui/separator";
+import { FaInfoCircle } from "react-icons/fa";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import { GiHotMeal } from 'react-icons/gi';
-import { GoDotFill } from 'react-icons/go';
-import getBMI from '@/utils/caulculators/bmi';
-import CardiovascularWorkout from '@/utils/caulculators/cardiovascular_workout';
-import Link from 'next/link';
-import calculateCalories from '@/utils/caulculators/calories'
-import FatWorkout from '@/utils/caulculators/fat_workout';
-import { PrismaClient } from '@prisma/client';
-import Factors from '@/utils/caulculators/factors';
-import MuscleWorkout from '@/utils/caulculators/muscle_workout';
-import getCompositionData from '@/utils/caulculators/composition';
+} from "@/components/ui/table";
+import getBMI from "@/utils/caulculators/bmi";
+import CardiovascularWorkout from "@/utils/caulculators/cardiovascular_workout";
+import calculateCalories from "@/utils/caulculators/calories";
+import FatWorkout from "@/utils/caulculators/fat_workout";
+import Factors from "@/utils/caulculators/factors";
+import MuscleWorkout from "@/utils/caulculators/muscle_workout";
+import getCompositionData from "@/utils/caulculators/composition";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
-import CopyLink from '@/components/copy';
-import { useEffect, useState } from 'react';
+} from "@/components/ui/sheet";
+import CopyLink from "@/components/copy";
+import { useEffect, useState } from "react";
 
-// const prisma = new PrismaClient();
-
-export default  function ProgramPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
-
+export default function ProgramPage({ params }: { params: { slug: string } }) {
   const [data, setData] = useState<any>(null);
   useEffect(() => {
     const url = `https://meta-fir-json-server.onrender.com/result`;
 
     fetch(url)
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error("Failed to fetch data");
         }
         return response.json();
       })
-      .then(result => {
-        const filteredData = result.find((item: any) => item.slug == params.slug);
+      .then((result) => {
+        const filteredData = result.find(
+          (item: any) => item.slug === params.slug,
+        );
         setData(filteredData);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }, [params]);
 
@@ -74,15 +63,13 @@ export default  function ProgramPage({
   if (!data) return <h1>NO DATA</h1>;
 
   // bmi
-  const {
-    bmi, healthy, overweight, status, underweight, ideal_weight,
-  } = getBMI(
-    {
-    height: data.overview?.height,
-    weight: data?.overview?.weight,
-    gender: data?.overview?.gender,
-    fitness_goal: data?.overview?.fitness_goal,
-  });
+  const { bmi, healthy, overweight, status, underweight, ideal_weight } =
+    getBMI({
+      height: data.overview?.height,
+      weight: data?.overview?.weight,
+      gender: data?.overview?.gender,
+      fitness_goal: data?.overview?.fitness_goal,
+    });
 
   // composition
   const composition = getCompositionData({
@@ -107,7 +94,7 @@ export default  function ProgramPage({
     height: data?.overview?.height,
     ideal_weight,
     workout_days: data?.overview?.workout_days,
-  })
+  });
 
   return (
     <div className="px-6 xl:w-3/4 mx-auto py-10 flex flex-col gap-20 text-md">
@@ -118,7 +105,9 @@ export default  function ProgramPage({
       <div className="flex flex-col gap-20">
         {/* Header - General overview */}
         <div className="flex flex-col gap-3">
-          <h2 className="font-bold text-3xl lg:text-4xl flex-shrink-0">General Overview</h2>
+          <h2 className="font-bold text-3xl lg:text-4xl flex-shrink-0">
+            General Overview
+          </h2>
           <span className="text-neutral-400 text-sm font-normal">
             A general overview on the fitness plan and current health
           </span>
@@ -130,31 +119,28 @@ export default  function ProgramPage({
           <div className="flex flex-col gap-5 w-full h-full">
             <h3 className="text-xl font-semibold">Weight Assessment</h3>
             <div>
-              Your current weight (
-              {data?.overview?.weight}
-              {' '}
-              Kg) is considered
-              {status === 'healthy' && (
+              Your current weight ({data?.overview?.weight} Kg) is considered
+              {status === "healthy" && (
                 <span className="font-semibold text-xl text-green-400">
-                  {' '}
+                  {" "}
                   Healthy
                 </span>
               )}
-              {status === 'underweight' && (
+              {status === "underweight" && (
                 <span className="font-semibold text-xl text-yellow-400">
-                  {' '}
+                  {" "}
                   Under Weight
                 </span>
               )}
-              {status === 'overweight' && (
+              {status === "overweight" && (
                 <span className="font-semibold text-xl text-yellow-400">
-                  {' '}
+                  {" "}
                   Over Weight
                 </span>
               )}
-              {status === 'obese' && (
+              {status === "obese" && (
                 <span className="font-semibold text-xl text-orange-400">
-                  {' '}
+                  {" "}
                   Obese
                 </span>
               )}
@@ -228,28 +214,16 @@ export default  function ProgramPage({
                         <div>
                           bmi = weight
                           <span className="text-sm text-neutral-400">
-                            {' '}
-                            (in kg)
-                            {' '}
-                          </span>
-                          {' '}
-                          / height ^ 2
-                          {' '}
+                            {" "}
+                            (in kg){" "}
+                          </span>{" "}
+                          / height ^ 2{" "}
                         </div>
                         <div>
-                          bmi =
-                          {' '}
-                          {data.overview?.weight}
-                          {' '}
-                          / (
-                          {data.overview?.height / 100}
-                          {' '}
-                          ^ 2)
+                          bmi = {data.overview?.weight} / (
+                          {data.overview?.height / 100} ^ 2)
                         </div>
-                        <div>
-                          bmi =
-                          {bmi}
-                        </div>
+                        <div>bmi ={bmi}</div>
                       </div>
                     </SheetContent>
                   </Sheet>
@@ -267,8 +241,7 @@ export default  function ProgramPage({
           <div className="flex flex-col gap-5 w-full h-full">
             <h3 className="text-xl font-semibold">Body Composition Analysis</h3>
             <div className="flex items-center gap-2">
-              Your current body composition (
-              {composition.fat_percentage}
+              Your current body composition ({composition.fat_percentage}
               %) is considered
               {composition.is_healthy ? (
                 <span className="font-semibold text-xl text-green-400">
@@ -292,8 +265,7 @@ export default  function ProgramPage({
                   <div className="absolute -bottom-1 left-2/4 -translate-x-2/4 translate-y-full space-y-1">
                     <div className="mx-auto w-0.5 h-3 bg-neutral-300" />
                     <div className="text-neutral-400 w-10 text-center mx-auto font-normal">
-                      {composition.max_value}
-                      %
+                      {composition.max_value}%
                     </div>
                   </div>
                 </div>
@@ -329,36 +301,29 @@ export default  function ProgramPage({
               Target Weight Recommendation
             </h3>
             <div className="text-3xl font-semibold text-emerald-500">
-              {ideal_weight}
-              {' '}
-              Kg
+              {ideal_weight} Kg
             </div>
 
-            {ideal_weight === data.overview?.weight && data.overview?.fitness_goal !== 'build_muscle' && (
-              <p>
-                Based D. R. Miller Formula, your current weight is considered perfect,
-                make sure to maitain this weight.
-              </p>
-            )}
+            {ideal_weight === data.overview?.weight &&
+              data.overview?.fitness_goal !== "build_muscle" && (
+                <p>
+                  Based D. R. Miller Formula, your current weight is considered
+                  perfect, make sure to maitain this weight.
+                </p>
+              )}
 
-            {ideal_weight !== data.overview?.weight && data.overview?.fitness_goal !== 'build_muscle' && (
-              <p>
-                Based D. R. Miller Formula and your fitness goal, the ideal
-                weight that you can achieve is
-                {' '}
-                {ideal_weight}
-                {' '}
-                Kg.
-              </p>
-            )}
+            {ideal_weight !== data.overview?.weight &&
+              data.overview?.fitness_goal !== "build_muscle" && (
+                <p>
+                  Based D. R. Miller Formula and your fitness goal, the ideal
+                  weight that you can achieve is {ideal_weight} Kg.
+                </p>
+              )}
 
-            {data.overview?.fitness_goal === 'build_muscle' && (
+            {data.overview?.fitness_goal === "build_muscle" && (
               <p>
-                Since your fitness goal is to build muscles, you need to aim for
-                {' '}
-                {ideal_weight}
-                {' '}
-                Kg to look muscular. Keep in mind that weight
+                Since your fitness goal is to build muscles, you need to aim for{" "}
+                {ideal_weight} Kg to look muscular. Keep in mind that weight
                 only is not sufficient, the body fat percentage is also an
                 important factor.
               </p>
@@ -388,9 +353,7 @@ export default  function ProgramPage({
               <p>
                 Based on Jackson & Pollock Ideal Body Fat Percentages and your
                 fitness goal, the perfect body composition that you can work on
-                is
-                {' '}
-                {composition.ideal_fat}
+                is {composition.ideal_fat}
                 %.
               </p>
             )}
@@ -404,37 +367,37 @@ export default  function ProgramPage({
           <h3 className="text-xl font-semibold">Summary</h3>
           <p>
             As a summary, your goal is to
-            {data.overview?.weight > ideal_weight
-              && ` lose ${
+            {data.overview?.weight > ideal_weight &&
+              ` lose ${
                 data.overview?.weight - ideal_weight
               } Kg to reach the ideal weight suggested (${ideal_weight} kg), `}
-            {data.overview?.weight < ideal_weight
-              && ` gain ${
+            {data.overview?.weight < ideal_weight &&
+              ` gain ${
                 ideal_weight - data.overview?.weight
               } Kg to reach the ideal weight suggested (${ideal_weight} kg), `}
-            {data.overview?.weight === ideal_weight
-              && ' maintain your current weight, '}
+            {data.overview?.weight === ideal_weight &&
+              " maintain your current weight, "}
             and for the body composition you should
-            {composition.fat_percentage > composition.ideal_fat
-              && ` burn ${
+            {composition.fat_percentage > composition.ideal_fat &&
+              ` burn ${
                 composition.fat_percentage - composition.ideal_fat
               } % of body fat to reach the ideal body composition suggested (${
                 composition.ideal_fat
               } %).`}
-            {composition.fat_percentage <= composition.ideal_fat
-              && ' maintain your current body fat percentage.'}
+            {composition.fat_percentage <= composition.ideal_fat &&
+              " maintain your current body fat percentage."}
           </p>
         </div>
       </div>
 
       {/* workout */}
-      {data.overview?.fitness_goal === 'build_muscle' && (
+      {data.overview?.fitness_goal === "build_muscle" && (
         <MuscleWorkout workout_days={data.overview?.workout_days} />
       )}
-      {data.overview?.fitness_goal === 'cardiovascular' && (
+      {data.overview?.fitness_goal === "cardiovascular" && (
         <CardiovascularWorkout workout_days={data.overview?.workout_days} />
       )}
-      {data.overview?.fitness_goal === 'burn_fats' && (
+      {data.overview?.fitness_goal === "burn_fats" && (
         <FatWorkout workout_days={data.overview?.workout_days} />
       )}
 
@@ -454,14 +417,17 @@ export default  function ProgramPage({
           <div className="text-3xl font-semibold text-emerald-500">
             {ideal_weight < data.overview?.weight && calory_data.lose_05}
             {ideal_weight > data.overview?.weight && calory_data.gain_05}
-            {ideal_weight === data.overview?.weight && calory_data.calories}
-            {' '}
+            {ideal_weight === data.overview?.weight &&
+              calory_data.calories}{" "}
             Calories
           </div>
           <p>
-            {ideal_weight < data.overview?.weight && `In order to lose 0.5 Kg per week you need to comsume ${calory_data.lose_05} calories a day.`}
-            {ideal_weight > data.overview?.weight && `In order to gain 0.5 Kg per week you need to comsume ${calory_data.gain_05} calories a day.`}
-            {ideal_weight === data.overview?.weight && `In order to maitain your current weight, you need to comsume ${calory_data.calories} calories a day.`}
+            {ideal_weight < data.overview?.weight &&
+              `In order to lose 0.5 Kg per week you need to comsume ${calory_data.lose_05} calories a day.`}
+            {ideal_weight > data.overview?.weight &&
+              `In order to gain 0.5 Kg per week you need to comsume ${calory_data.gain_05} calories a day.`}
+            {ideal_weight === data.overview?.weight &&
+              `In order to maitain your current weight, you need to comsume ${calory_data.calories} calories a day.`}
           </p>
 
           {/* chart v2 */}
@@ -475,9 +441,7 @@ export default  function ProgramPage({
                 <div className="absolute -bottom-1 left-2/4 -translate-x-2/4 translate-y-full space-y-1">
                   <div className="mx-auto w-0.5 h-3 bg-neutral-300" />
                   <div className="text-neutral-400 w-10 text-center mx-auto font-normal">
-                    {calory_data.lose_1}
-                    {' '}
-                    calories
+                    {calory_data.lose_1} calories
                   </div>
                 </div>
               </div>
@@ -490,9 +454,7 @@ export default  function ProgramPage({
                 <div className="absolute -bottom-1 left-2/4 -translate-x-2/4 translate-y-full space-y-1">
                   <div className="mx-auto w-0.5 h-3 bg-neutral-300" />
                   <div className="text-neutral-400 w-10 text-center mx-auto font-normal">
-                    {calory_data.lose_05}
-                    {' '}
-                    calories
+                    {calory_data.lose_05} calories
                   </div>
                 </div>
               </div>
@@ -505,9 +467,7 @@ export default  function ProgramPage({
                 <div className="absolute -bottom-1 left-2/4 -translate-x-2/4 translate-y-full space-y-1">
                   <div className="mx-auto w-0.5 h-3 bg-neutral-300" />
                   <div className="text-neutral-400 w-10 text-center mx-auto font-normal">
-                    {calory_data.lose_025}
-                    {' '}
-                    calories
+                    {calory_data.lose_025} calories
                   </div>
                 </div>
               </div>
@@ -520,9 +480,7 @@ export default  function ProgramPage({
                 <div className="absolute -bottom-1 left-2/4 -translate-x-2/4 translate-y-full space-y-1">
                   <div className="mx-auto w-0.5 h-3 bg-neutral-300" />
                   <div className="text-neutral-400 w-10 text-center mx-auto font-normal">
-                    {calory_data.calories}
-                    {' '}
-                    calories
+                    {calory_data.calories} calories
                   </div>
                 </div>
               </div>
@@ -535,9 +493,7 @@ export default  function ProgramPage({
                 <div className="absolute -bottom-1 left-2/4 -translate-x-2/4 translate-y-full space-y-1">
                   <div className="mx-auto w-0.5 h-3 bg-neutral-300" />
                   <div className="text-neutral-400 w-10 text-center mx-auto font-normal">
-                    {calory_data.gain_025}
-                    {' '}
-                    calories
+                    {calory_data.gain_025} calories
                   </div>
                 </div>
               </div>
@@ -550,9 +506,7 @@ export default  function ProgramPage({
                 <div className="absolute -bottom-1 left-2/4 -translate-x-2/4 translate-y-full space-y-1">
                   <div className="mx-auto w-0.5 h-3 bg-neutral-300" />
                   <div className="text-neutral-400 w-10 text-center mx-auto font-normal">
-                    {calory_data.gain_05}
-                    {' '}
-                    calories
+                    {calory_data.gain_05} calories
                   </div>
                 </div>
               </div>
@@ -565,9 +519,7 @@ export default  function ProgramPage({
                 <div className="absolute -bottom-1 left-2/4 -translate-x-2/4 translate-y-full space-y-1 rounded-r-md">
                   <div className="mx-auto w-0.5 h-3 bg-neutral-300" />
                   <div className="text-neutral-400 w-10 text-center mx-auto font-normal">
-                    {calory_data.gain_1}
-                    {' '}
-                    calories
+                    {calory_data.gain_1} calories
                   </div>
                 </div>
               </div>
@@ -619,24 +571,19 @@ export default  function ProgramPage({
               </TableRow>
             </TableBody>
           </Table>
-
         </div>
 
         <div className="flex flex-col lg:flex-row gap-10 items-start">
-         
           <div className="flex flex-col gap-5 w-full h-full">
             <h3 className="text-xl font-semibold">
               Daily Proteins Requirement
             </h3>
             <div className="text-3xl font-semibold text-emerald-500">
-              {calory_data?.protein_1}
-              g to
-              {' '}
-              {calory_data?.protein_2}
-              g
+              {calory_data?.protein_1}g to {calory_data?.protein_2}g
             </div>
             <p>
-              {data?.overview?.fitness_goal === 'build_muscle' && 'Since your goal is to build muscles, high protein intake is an important factor to build lean muscle mass'}
+              {data?.overview?.fitness_goal === "build_muscle" &&
+                "Since your goal is to build muscles, high protein intake is an important factor to build lean muscle mass"}
             </p>
             <div className="flex flex-col gap-1">
               <div className="font-semibold">Sources:</div>
@@ -658,20 +605,14 @@ export default  function ProgramPage({
             </div>
           </div>
 
-         
           <div className="flex flex-col gap-5 w-full h-full">
-            <h3 className="text-xl font-semibold">
-              Daily Carbs Requirement
-            </h3>
+            <h3 className="text-xl font-semibold">Daily Carbs Requirement</h3>
             <div className="text-3xl font-semibold text-emerald-500">
-              {calory_data?.carbs_1}
-              g to
-              {' '}
-              {calory_data?.carbs_2}
-              g
+              {calory_data?.carbs_1}g to {calory_data?.carbs_2}g
             </div>
             <p>
-              {data?.overview?.fitness_goal === 'build_muscle' && 'Carbohydrates are a crucial macronutrient for bodybuilders due to their role in providing energy for intense workouts and aiding in muscle recovery'}
+              {data?.overview?.fitness_goal === "build_muscle" &&
+                "Carbohydrates are a crucial macronutrient for bodybuilders due to their role in providing energy for intense workouts and aiding in muscle recovery"}
             </p>
             <div className="flex flex-col gap-1">
               <div className="font-semibold">Sources:</div>
@@ -694,18 +635,13 @@ export default  function ProgramPage({
           </div>
 
           <div className="flex flex-col gap-5 w-full h-full">
-            <h3 className="text-xl font-semibold">
-              Daily Fats Requirement
-            </h3>
+            <h3 className="text-xl font-semibold">Daily Fats Requirement</h3>
             <div className="text-3xl font-semibold text-emerald-500">
-              {calory_data?.fats_1}
-              g to
-              {' '}
-              {calory_data?.fats_2}
-              g
+              {calory_data?.fats_1}g to {calory_data?.fats_2}g
             </div>
             <p>
-              {data?.overview?.fitness_goal === 'build_muscle' && 'You need to take from 20% to 25% fats of total calories'}
+              {data?.overview?.fitness_goal === "build_muscle" &&
+                "You need to take from 20% to 25% fats of total calories"}
             </p>
             <div className="flex flex-col gap-1">
               <div className="font-semibold">Sources:</div>

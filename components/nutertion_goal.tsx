@@ -1,22 +1,12 @@
-"use client";
+'use client';
 
 // imports
-import Lottie from "lottie-react";
-import fireAnimation from "@/animations/fire.json";
-import strongAnimation from "@/animations/strong.json";
-import { useState, useContext, useEffect } from "react";
-import powerAnimation from "@/animations/power.json";
-import healthAnimation from "@/animations/health.json";
+import { useState } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { StepsContext } from "@/context/steps";
-import bulkAnimation from "@/animations/bulk.json";
-import recompositionAnimation from "@/animations/recomposition.json";
-import robotAnimation from "@/animations/robot.json";
 import CardComponent from "./card";
 import Picker from "./picker";
 import { Input } from "./ui/input";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface NutritionGoalProps {

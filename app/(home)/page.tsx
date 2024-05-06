@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable @typescript-eslint/quotes */
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 

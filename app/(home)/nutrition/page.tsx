@@ -1,3 +1,6 @@
+/* eslint-disable arrow-body-style */
+/* eslint-disable key-spacing */
+/* eslint-disable @typescript-eslint/quotes */
 import NutritionGoal from "@/components/nutertion_goal";
 import { types } from "util";
 
@@ -13,8 +16,8 @@ const nutritiondata = {
     name:"",
     number_snacks: 2,
     eating_out: 2,
-    water_drinking: 2
-  }
+    water_drinking: 2,
+  },
 };
 const page = () => {
   return (
