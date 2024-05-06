@@ -25,7 +25,7 @@ export default function CopyLink({ params }: { params: any }) {
 
   const copy = () => {
     // navigator.clipboard.writeText(`https://bestshape.fit/program/${params.slug}`)
-    navigator.clipboard.writeText(`http://localhost:3000/${params.slug}`)
+    navigator.clipboard.writeText(`https://meta-fir-json-server.onrender.com/${params.slug}`)
     setIsCopied(true)
   }
 
@@ -38,7 +38,7 @@ export default function CopyLink({ params }: { params: any }) {
       <CardContent>
         <div className="flex flex-col lg:flex-row gap-2 items-center">
           {/* <Input contentEditable={false} value={`https://bestshape.fit/program/${params.slug}`} /> */}
-          <Input contentEditable={false} value={`http://localhost:3000/${params.slug}`} />
+          <Input contentEditable={false} value={`https://meta-fir-json-server.onrender.com/${params.slug}`} />
           <div className="relative">
             <Button onClick={copy} className="w-32">Copy Link</Button>
             {is_copied && (

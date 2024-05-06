@@ -52,7 +52,7 @@ export default  function ProgramPage({
 
   const [data, setData] = useState<any>(null);
   useEffect(() => {
-    const url = `http://localhost:4000/result`;
+    const url = `https://meta-fir-json-server.onrender.com/result`;
 
     fetch(url)
       .then(response => {

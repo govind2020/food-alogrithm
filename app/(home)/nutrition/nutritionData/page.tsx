@@ -57,7 +57,7 @@ const page = () => {
   const search = searchParams.get("id");
 
   useEffect(() => {
-    const url = `http://localhost:4000/nutrition`;
+    const url = `https://meta-fir-json-server.onrender.com/nutrition`;
 
     fetch(url)
       .then((response) => {

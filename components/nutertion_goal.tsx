@@ -50,7 +50,7 @@ const NutritionGoal: React.FC<NutritionGoalProps> = ({
   };
 
   const logAnswers = () => {
-    fetch('http://localhost:4000/nutrition', {
+    fetch('https://meta-fir-json-server.onrender.com/nutrition', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
