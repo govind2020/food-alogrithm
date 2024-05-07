@@ -1,7 +1,5 @@
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable @typescript-eslint/quotes */
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -9,8 +7,11 @@ export default function Home() {
       {/* header */}
       <div className="flex flex-col gap-6 lg:gap-12 text-center w-full mx-auto">
         <h1 className="text-4xl lg:text-6xl font-bold text-center leading-relaxed lg:leading-snug">
-          Create a Full <span className="text-sky-500">Fitness Program 💪</span>{" "}
-          in <span className="text-sky-500">30</span> Seconds ⏱
+          Create a Full
+          <span className="text-sky-500">Fitness Program 💪</span>
+          in
+          <span className="text-sky-500">30</span>
+          Seconds ⏱
         </h1>
 
         <p className="text-lg text-neutral-400 lg:px-24 mx-auto">
