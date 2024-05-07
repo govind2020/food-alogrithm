@@ -21,14 +21,15 @@ export default function Home() {
           intuitive app has you covered.
         </p>
         <div className="flex justify-center align-centre gap-5">
-          <Link href="/start">
+          {/* <Link href="/start">
             <Button
               size="lg"
-              className="w-60 mt-5 py-7 text-xl animate__animated animate__infinite animate__pulse rounded-full shadow-lg mx-auto"
+              className="w-60 mt-5 py-7 text-xl animate__animated animate__infinite animate__pulse
+              rounded-full shadow-lg mx-auto"
             >
               Fitness
             </Button>
-          </Link>
+          </Link> */}
           <Link href="/nutrition">
             <Button
               size="lg"

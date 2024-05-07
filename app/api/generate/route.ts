@@ -68,7 +68,6 @@ export async function POST(request: Request): Promise<any> {
   const slug = result.name
     ? result.name + uuidv4().substring(0, 4)
     : uuidv4().substring(0, 5);
-console.log('slug==>', slug);
   const jsonServerUrl = "https://meta-fir-json-server.onrender.com/result";
   const jsonData = { slug, overview };
   fetch(jsonServerUrl, {
