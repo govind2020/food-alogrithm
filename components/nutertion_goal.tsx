@@ -1,17 +1,16 @@
 'use client';
 
 // imports
-import { useState } from "react";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
-import CardComponent from "./card";
-import Picker from "./picker";
-import { Input } from "./ui/input";
-import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
+import { useRouter } from 'next/navigation';
+import CardComponent from './card';
+import Picker from './picker';
+import { Input } from './ui/input';
 
 interface NutritionGoalProps {
   title: string;
- 
   description: string;
   id: string;
   answers: {
@@ -22,50 +21,51 @@ interface NutritionGoalProps {
     water_drinking: number;
   };
 }
-const NutritionGoal: React.FC<NutritionGoalProps> = ({
-  title,
-  description,
-  id,
-  answers
-}) => {
+
+function NutritionGoal(
+  {
+ title, description, answers, id,
+}
+  : NutritionGoalProps,
+): JSX.Element {
   const [myanswers, setMyAnswers] = useState(answers);
   const [newId, setNewId] = useState('');
-  const router = useRouter(); 
+  const router = useRouter();
 
   const updateAnswer = (field: keyof typeof myanswers, value: any) => {
     setMyAnswers((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const logAnswers = () => {
     fetch('https://meta-fir-json-server.onrender.com/nutrition', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(myanswers)
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(myanswers),
     })
-    .then(response => {
+      .then((response) => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+          throw new Error('Network response was not ok');
         }
         return response.json();
-    })
-    .then(data => {
+      })
+      .then((data) => {
         console.log('Submitted Successfully:', data);
-        setNewId(data?.id)
-        router.push(`/nutrition/nutritionData?id=${data?.id}`);
-    })
-    .catch(error => {
+        setNewId(data.id);
+        router.push(`/nutrition/nutritionData?id=${data.id}`);
+      })
+      .catch((error) => {
         console.error('Failed to submit:', error);
         alert('Failed to submit data');
-    });
+      });
   };
 
   return (
-    <CardComponent title={title} description={description} >
+    <CardComponent title={title} description={description}>
       {/* Fitness goal */}
       <div className="flex flex-col space-y-3">
         <Label htmlFor="name" className="text-md lg:text-lg">
@@ -75,8 +75,7 @@ const NutritionGoal: React.FC<NutritionGoalProps> = ({
         <div className="flex flex-col space-y-3">
           <Label htmlFor="name" className="text-md lg:text-lg">
             Name
-            {' '}
-            <span className="text-neutral-500 text-xs lg:text-md"></span>
+            <span className="text-neutral-500 text-xs lg:text-md" />
           </Label>
           <Input
             defaultValue={answers?.name}
@@ -92,7 +91,7 @@ const NutritionGoal: React.FC<NutritionGoalProps> = ({
         </Label>
         <RadioGroup
           defaultValue={myanswers?.current_diet}
-          onValueChange={(value) => updateAnswer("current_diet", value)}
+          onValueChange={(value) => updateAnswer('current_diet', value)}
           className="grid grid-cols-1 lg:grid-cols-3 gap-4 w-full"
         >
           {/* Vegetarian */}
@@ -160,16 +159,12 @@ const NutritionGoal: React.FC<NutritionGoalProps> = ({
           min={1}
           tag="Days per week"
           value={myanswers.number_snacks}
-          onAdd={() =>
-            updateAnswer("number_snacks", myanswers.number_snacks + 1)
-          }
-          onRemove={() =>
-            updateAnswer(
-              "number_snacks",
-              Math.max(0, myanswers.number_snacks - 1)
-            )
-          }
-          onSlide={(value) => updateAnswer("number_snacks", value)}
+          onAdd={() => updateAnswer('number_snacks', myanswers.number_snacks + 1)}
+          onRemove={() => updateAnswer(
+            'number_snacks',
+              Math.max(0, myanswers.number_snacks - 1),
+            )}
+          onSlide={(value) => updateAnswer('number_snacks', value)}
         />
       </div>
 
@@ -183,11 +178,9 @@ const NutritionGoal: React.FC<NutritionGoalProps> = ({
           min={0}
           tag="Days per week"
           value={myanswers.eating_out}
-          onAdd={() => updateAnswer("eating_out", myanswers.eating_out + 1)}
-          onRemove={() =>
-            updateAnswer("eating_out", Math.max(0, myanswers.eating_out - 1))
-          }
-          onSlide={(value) => updateAnswer("eating_out", value)}
+          onAdd={() => updateAnswer('eating_out', myanswers.eating_out + 1)}
+          onRemove={() => updateAnswer('eating_out', Math.max(0, myanswers.eating_out - 1))}
+          onSlide={(value) => updateAnswer('eating_out', value)}
         />
       </div>
 
@@ -201,28 +194,24 @@ const NutritionGoal: React.FC<NutritionGoalProps> = ({
           min={1}
           tag="Days per week"
           value={myanswers.water_drinking}
-          onAdd={() =>
-            updateAnswer("water_drinking", myanswers.water_drinking + 1)
-          }
-          onRemove={() =>
-            updateAnswer(
-              "water_drinking",
-              Math.max(0, myanswers.water_drinking - 1)
-            )
-          }
-          onSlide={(value) => updateAnswer("water_drinking", value)}
+          onAdd={() => updateAnswer('water_drinking', myanswers.water_drinking + 1)}
+          onRemove={() => updateAnswer(
+            'water_drinking',
+              Math.max(0, myanswers.water_drinking - 1),
+            )}
+          onSlide={(value) => updateAnswer('water_drinking', value)}
         />
       </div>
 
-     
       <button
+        type="submit"
         onClick={logAnswers}
         className="mt-4 p-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition duration-150"
       >
         Submit
-      </button> 
+      </button>
     </CardComponent>
   );
-};
+}
 
 export default NutritionGoal;

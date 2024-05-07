@@ -26,8 +26,7 @@ export default function FitGoal({
   description: string;
   id: string;
 }) {
-
-  // variables
+// variables
   const {
     getAnswer, updateAnswer, blockNext, allowNext,
   } = useContext(StepsContext);
