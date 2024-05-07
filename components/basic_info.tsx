@@ -47,7 +47,7 @@ export default function BasicInfoCard({
           <Label htmlFor="name" className="text-md lg:text-lg">
             Name
             {' '}
-            <span className="text-neutral-500 text-xs lg:text-md"></span>
+            <span className="text-neutral-500 text-xs lg:text-md" />
           </Label>
           <Input
             defaultValue={answers.name}
@@ -62,7 +62,7 @@ export default function BasicInfoCard({
           <Label htmlFor="email" className="text-md lg:text-lg">
             Email
             {' '}
-            <span className="text-neutral-500 text-xs lg:text-md"></span>
+            <span className="text-neutral-500 text-xs lg:text-md" />
           </Label>
           <Input
             defaultValue={answers.email}
@@ -77,7 +77,7 @@ export default function BasicInfoCard({
           <Label htmlFor="phone" className="text-md lg:text-lg">
             Phone Number
             {' '}
-            <span className="text-neutral-500 text-xs lg:text-md"></span>
+            <span className="text-neutral-500 text-xs lg:text-md" />
           </Label>
           <Input
             defaultValue={answers.phone}
