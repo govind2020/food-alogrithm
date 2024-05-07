@@ -51,7 +51,7 @@ export default function ProgramPage({ params }: { params: { slug: string } }) {
         console.error('Error fetching data:', error);
       });
   }, [params]);
-
+console.log('data result==>', data)
   // returns
   if (!data) return <h1>NO DATA</h1>;
 

@@ -78,7 +78,7 @@ function Page() {
   }, [search]);
 
   const diet = dietInfo.find((d) => d.id === dietDetails);
-
+  console.log('diet==>', diet)
   return (
     <div>
       <div className="px-6 xl:w-3/4 mx-auto py-10 flex flex-col gap-20 text-md">

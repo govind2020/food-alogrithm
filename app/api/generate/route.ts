@@ -49,9 +49,9 @@ export async function POST(request: Request): Promise<any> {
     weight: result.weight,
     height: result.height,
     is_fat_accurate: result.is_fat_accurate === "yes",
-    neck: result.neck,
-    waist: result.waist,
-    hip: result.hip,
+    neck: result.neck || 22,
+    waist: result.waist || 34,
+    hip: result.hip || 33,
     body_type: result.body_type,
     fitness_goal: result.fitness_goal,
     workout_days: result.workout_days,
@@ -62,11 +62,13 @@ export async function POST(request: Request): Promise<any> {
     eating_out: result.eating_out,
     water_drinking: result.water_drinking,
   };
+  console.log('overview==>', overview)
 
   // save data to Json server
   const slug = result.name
     ? result.name + uuidv4().substring(0, 4)
     : uuidv4().substring(0, 5);
+console.log('slug==>', slug);
   const jsonServerUrl = "https://meta-fir-json-server.onrender.com/result";
   const jsonData = { slug, overview };
   fetch(jsonServerUrl, {
@@ -77,10 +79,9 @@ export async function POST(request: Request): Promise<any> {
     body: JSON.stringify(jsonData),
   })
     .then((response) => response.json())
-    .then((data) => console.log("Data uploaded to JSON server:", data))
+    .then((data) => console.log("Data uploaded to JSON server of result-->:", data))
     // eslint-disable-next-line @typescript-eslint/no-shadow
     .catch((error) => console.error("Error uploading data to JSON server:", error));
-
   return NextResponse.json({
     slug,
   });
